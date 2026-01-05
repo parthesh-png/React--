@@ -1,10 +1,14 @@
  import "./App.css";
  import {useState} from 'react';
-//  import Counter from './component/counter'
-import PlayButton from "./component/PlayButton";
-import Video  from "./component/video";
+// //  import Counter from './component/counter'
+// import PlayButton from "./component/PlayButton";
+// import Video  from "./component/video";
 import videoDB from'./data/data';   //improting is default so anyname can be 
 import AddVideo from "./component/AddVideo";
+import VideoList from "./component/VideoList";
+
+
+
 
 function App(){
 console.log('render App')
@@ -19,14 +23,20 @@ function addVideos(video){
         {...video,id:videos.length+1}
      ])
 
-  
-
 }
 
 return(
   <div className="App"  onClick={()=>console.log('App')}>
 
-  <AddVideo addVideos ={addVideos}></AddVideo>   {/*prop create now lift in component fun}
+    {/* props created here now it will lift */}
+
+  <AddVideo addVideos ={addVideos}></AddVideo>   
+
+   <VideoList videos={videos}></VideoList>
+  
+   
+
+  
                      
  {/* <div>  
   <button onClick={()=>{
@@ -48,7 +58,7 @@ return(
 
 
 
- {
+ {/* {
   videos.map(video=><Video    //video is itrator here 
     key ={video.id}
     title = {video.title}
@@ -66,7 +76,7 @@ return(
    
    </PlayButton>
  </Video>)
- }
+ } */}
 
 
 
