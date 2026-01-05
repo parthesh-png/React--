@@ -1,21 +1,34 @@
  import "./App.css";
  import {useState} from 'react';
- import Counter from './component/counter'
+//  import Counter from './component/counter'
 import PlayButton from "./component/PlayButton";
 import Video  from "./component/video";
 import videoDB from'./data/data';   //improting is default so anyname can be 
+import AddVideo from "./component/AddVideo";
 
 function App(){
 console.log('render App')
 
+
+
 const[videos,setVideos] =useState(videoDB)
+
+function addVideos(video){
+     setVideos([
+      ...videos,
+        {...video,id:videos.length+1}
+     ])
+
+  
+
+}
 
 return(
   <div className="App"  onClick={()=>console.log('App')}>
- <div>  
 
-
-
+  <AddVideo addVideos ={addVideos}></AddVideo>   {/*prop create now lift in component fun}
+                     
+ {/* <div>  
   <button onClick={()=>{
    
      setVideos( [...videos,{     //copy of old then added new in it
@@ -29,7 +42,11 @@ return(
     }])
 
   }}>Add Video</button>
- </div>
+ </div> */}
+
+
+
+
 
  {
   videos.map(video=><Video    //video is itrator here 
@@ -51,14 +68,18 @@ return(
  </Video>)
  }
 
+
+
+
+
+
+
+
+
        {/* clear :both - break the flow od css after any div come after that  */}
- <div style = {{clear:'both'}}>   
- </div>
+ {/* <div style = {{clear:'both'}}>   
+ </div> */}
 {/* <Counter>add</Counter> */}
-
-
-
-
 
 
 
