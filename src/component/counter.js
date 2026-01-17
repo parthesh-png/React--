@@ -9,7 +9,7 @@ function Counter(){
     function handleClick(e){
         e.stopPropagation();
         // number++;
-        setNumber(number=>number+1)
+        setNumber(number=>number+1 )
         // setNumber(number+1)
         console.log(number) 
  

@@ -1,5 +1,5 @@
 import './AddVideo.css'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
 const initialState ={
 
@@ -11,7 +11,7 @@ const initialState ={
                       views:""  
 }
 
-function AddVideo({addVideos}){    //addvideos is prop
+function AddVideo({addVideos,updateVideo,editableVideo}){    //addvideos is prop
 
         const [video, setVideo] = useState(initialState); //initial value set in useState
 
@@ -20,7 +20,13 @@ function AddVideo({addVideos}){    //addvideos is prop
 
       function handlesubmit(e)  {
          e.preventDefault();   //default behavior of form reload , to stop it 
-         addVideos(video)
+
+         if(editableVideo){
+          updateVideo(video)
+         }else{
+             addVideos(video)
+         }
+        
          setVideo(initialState)
          // console.log(video)
 
@@ -40,7 +46,14 @@ function AddVideo({addVideos}){    //addvideos is prop
           })
           console.log(video)  //state is asyc so it render nest time like vv typed then show only v 
       }
+      
+      useEffect(()=>{
+         if(editableVideo){
+             setVideo(editableVideo)
+         }
+        
 
+      },[editableVideo])
 
 
 
@@ -82,7 +95,7 @@ function AddVideo({addVideos}){    //addvideos is prop
             //     }}
             >
                     
-                    Add Video
+                 {editableVideo ?'Edit':'Add'}   Add Video
                     
            </button>
 

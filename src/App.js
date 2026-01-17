@@ -16,8 +16,10 @@ console.log('render App')
 
 
 const[videos,setVideos] =useState(videoDB)
+const[editableVideo,setEditableVideos] =useState()
 
-function addVideos(video){
+function addVideos(video){           //array 
+
      setVideos([
       ...videos,
         {...video,id:videos.length+1}
@@ -25,14 +27,37 @@ function addVideos(video){
 
 }
 
+
+
+function deleteVideo(id){
+
+  setVideos(videos.filter(video=>video.id!==id))  //itrator
+  
+
+}
+
+function editVideo(id){
+  setEditableVideos(videos.find(video =>video.id===id))
+
+
+}
+function updateVideo(video){
+  const index = videos.findIndex(v => v.id===video.id)
+  const newVideo = [...videos]
+
+ newVideo.splice(index,1,video)
+setVideos(newVideo)
+}
+
+
 return(
   <div className="App"  onClick={()=>console.log('App')}>
 
     {/* props created here now it will lift */}
 
-  <AddVideo addVideos ={addVideos}></AddVideo>   
+  <AddVideo addVideos ={addVideos} updateVideo={updateVideo} editableVideo={editableVideo}></AddVideo>   
 
-   <VideoList videos={videos}></VideoList>
+   <VideoList editVideo ={editVideo}   deleteVideo={deleteVideo} videos={videos}></VideoList>
   
    
 

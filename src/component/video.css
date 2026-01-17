@@ -2,6 +2,7 @@
     width:15em;
     margin:0 0.2em;
     float:left;
+    position: relative;
 } 
 
 .pic img{
@@ -20,4 +21,15 @@ margin-bottom: 0.2em;
 }
 .views span{
     padding:0 0.5em;
+}
+.Close{
+    position : absolute;
+    right:0;
+
+}
+
+
+.edit{
+    position: absolute;   
+    right:4em;
 }
