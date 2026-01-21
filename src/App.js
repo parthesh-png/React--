@@ -1,5 +1,5 @@
  import "./App.css";
- import {useState} from 'react';
+ import {useReducer, useState} from 'react';
 // //  import Counter from './component/counter'
 // import PlayButton from "./component/PlayButton";
 // import Video  from "./component/video";
@@ -12,42 +12,132 @@ import VideoList from "./component/VideoList";
 
 function App(){
 console.log('render App')
+const[editableVideo,setEditableVideos] =useState(null)
+
+function videoReducer(videos,action){   //it return switch
+  switch(action.type){
+    case 'ADD':
+      return   [...videos,
+        {...action.payload,id:videos.length+1}
+     ]
+
+    case 'DELETE':
+      return videos.filter(video=>video.id!==action.payload)
+
+    case 'UPDATE':
+        const index = videos.findIndex(v => v.id===action.payload.id)
+          const newVideo = [...videos]
+
+        newVideo.splice(index,1,action.payload)  
+        setEditableVideos(null)   //for reset button after editing 
+        return newVideo;  //return is break
+
+     default:
+     return videos
+
+  
+
+  }
+}
+
+ const [videos,dispatch] =useReducer(videoReducer,videoDB)
+
+// const[videos,setVideos] =useState(videoDB)
 
 
 
-const[videos,setVideos] =useState(videoDB)
-const[editableVideo,setEditableVideos] =useState()
 
-function addVideos(video){           //array 
 
-     setVideos([
-      ...videos,
-        {...video,id:videos.length+1}
-     ])
+//ADDING VIDEO 
+/******************************* */
+//using useState and effect add work 
+
+
+// function addVideos(video){           //array 
+
+
+
+//      setVideos([
+//       ...videos,
+//         {...video,id:videos.length+1}
+//      ])
+
+// }
+
+/********************************* */
+
+//usig usereduce 
+
+function addVideos(video){           
+
+//action : {type : add , payload :video }
+dispatch({type: 'ADD' , payload:video})   //it need add and video
+
 
 }
 
 
+//DELETE VIDEO
 
+//****************************/
+//useing use state 
+
+// function deleteVideo(id){
+
+//  setVideos(videos.filter(video=>video.id!==id))  //itrator
+  
+
+// }
+
+/***************************************/ 
+
+//Using USE REDUCER 
 function deleteVideo(id){
 
-  setVideos(videos.filter(video=>video.id!==id))  //itrator
+ dispatch({type: 'DELETE' , payload:id})
   
 
 }
+
+
+
+
 
 function editVideo(id){
   setEditableVideos(videos.find(video =>video.id===id))
 
 
 }
-function updateVideo(video){
-  const index = videos.findIndex(v => v.id===video.id)
-  const newVideo = [...videos]
 
- newVideo.splice(index,1,video)
-setVideos(newVideo)
+
+
+//UPDATE - VIDEO 
+
+/***************** */
+// function updateVideo(video){
+//   const index = videos.findIndex(v => v.id===video.id)
+//   const newVideo = [...videos]
+
+//  newVideo.splice(index,1,video)
+// setVideos(newVideo)
+// }
+
+/******************************** */
+
+ //REducer
+ function updateVideo(video){
+
+  dispatch({type:'UPDATE',payload:video})
+  
+
 }
+
+
+
+
+
+
+
 
 
 return(
